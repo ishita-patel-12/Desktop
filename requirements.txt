@@ -1,0 +1,45 @@
+# --- Core (Phase 0/1 - works with just these) ---
+pydantic>=2.0
+pyyaml>=6.0
+loguru>=0.7
+rapidfuzz>=3.0
+
+# --- Voice (Phase 1) ---
+# No wake word: --voice starts listening immediately (VAD-based, no
+# press-to-talk, no idle trigger-phrase listener) - see voice/stt.py.
+faster-whisper>=1.0
+pyttsx3>=2.90
+sounddevice>=0.4
+numpy>=1.24
+
+# --- LLM fallback (Phase 1, optional) ---
+ollama>=0.2             # requires local Ollama daemon running
+
+# --- File / process / browser control (Phase 1) ---
+send2trash>=1.8
+psutil>=5.9
+
+# --- Excel automation (Tier 2) ---
+openpyxl>=3.1
+# pywin32>=306           # Windows only - live Excel COM control
+
+# --- Gestures (Phase 2) ---
+opencv-python>=4.9
+mediapipe>=0.10
+pyautogui>=0.9
+pynput>=1.7
+pygetwindow>=0.0.9      # Windows active-window detection/close, via os_adapter/windows_adapter.py
+# pywinauto>=0.6.8       # Windows only - more robust active-window detection
+# On Linux, active-window detection/close instead uses the `xdotool` system
+# binary (not a pip package) via os_adapter/linux_adapter.py - X11 only:
+#   sudo apt install xdotool   (or your distro's equivalent)
+# Without it, or under Wayland, os_adapter falls back to NoOpAdapter and
+# window-focus-dependent features (fist-to-close confirmation, per-app
+# gesture scoping) degrade gracefully rather than failing. See the
+# README's "Platform support" section.
+
+# --- Teachable gestures (Phase 3) ---
+scikit-learn>=1.4
+
+# --- Testing ---
+pytest>=8.0

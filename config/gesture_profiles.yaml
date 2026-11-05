@@ -1,0 +1,43 @@
+# Maps gesture events to actions depending on which app/window currently has
+# focus. This is what lets the SAME physical swipe mean "switch browser tab"
+# in general, but "press the Up arrow" while a browser game (Temple Run,
+# Subway Surfers, etc. played in a tab) has focus.
+#
+# How matching works (see gestures/loop.py's _select_profile):
+#   Profiles other than "default" are checked top-to-bottom; the first one
+#   whose `match.title_contains` list has a case-insensitive substring hit
+#   against the current window title wins. If nothing matches, "default"
+#   is used. "default" itself is never matched against - it's the fallback.
+#
+# Each gesture event maps to ONE action:
+#   {action: scroll, direction: up|down}     -> mouse-wheel scroll
+#   {action: keys, keys: [k1, k2, ...]}       -> a single keypress (one key)
+#                                                or a held-together hotkey
+#                                                (2+ keys, e.g. ctrl+tab)
+#
+# Add your own profile for a specific game/site by adding a block below -
+# no code changes needed. For a game that isn't full-screen/doesn't put a
+# distinctive word in its tab title, just add whatever substring IS in the
+# title (check the browser tab) to `title_contains`.
+
+default:
+  swipe_up:    { action: scroll, direction: up }
+  swipe_down:  { action: scroll, direction: down }
+  swipe_left:  { action: keys, keys: [ctrl, shift, tab] }   # previous tab
+  swipe_right: { action: keys, keys: [ctrl, tab] }          # next tab
+
+# Browser endless-runner games (Temple Run, Subway Surfers, Crossy Road,
+# etc. as played on sites like Poki/CrazyGames) mostly use plain arrow keys
+# for steer/jump/duck - swipes become arrow presses instead of tab-switching.
+browser_game:
+  match:
+    title_contains:
+      - "temple run"
+      - "subway surf"
+      - "crossy road"
+      - "poki.com"
+      - "crazygames"
+  swipe_up:    { action: keys, keys: [up] }      # jump
+  swipe_down:  { action: keys, keys: [down] }    # slide/duck
+  swipe_left:  { action: keys, keys: [left] }    # steer left
+  swipe_right: { action: keys, keys: [right] }   # steer right

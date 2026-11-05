@@ -1,0 +1,42 @@
+# Maps spoken app names -> platform-specific launch commands.
+# Add aliases (lowercase) so "chrome", "google chrome" etc. all resolve.
+#
+# "cmd" is a list passed to subprocess.Popen.
+# "process_names" helps the executor find/close the right running process
+# (psutil matches on these, case-insensitive substring match).
+
+apps:
+  chrome:
+    aliases: ["chrome", "google chrome"]
+    windows: { cmd: ["cmd", "/c", "start", "chrome"] }
+    darwin:  { cmd: ["open", "-a", "Google Chrome"] }
+    linux:   { cmd: ["google-chrome"] }
+    process_names: ["chrome", "google-chrome", "chrome.exe"]
+
+  vscode:
+    aliases: ["vs code", "vscode", "visual studio code", "code"]
+    windows: { cmd: ["cmd", "/c", "start", "code"] }
+    darwin:  { cmd: ["open", "-a", "Visual Studio Code"] }
+    linux:   { cmd: ["code"] }
+    process_names: ["code", "code.exe", "Code Helper"]
+
+  excel:
+    aliases: ["excel", "microsoft excel"]
+    windows: { cmd: ["cmd", "/c", "start", "excel"] }
+    darwin:  { cmd: ["open", "-a", "Microsoft Excel"] }
+    linux:   { cmd: ["libreoffice", "--calc"] }
+    process_names: ["excel", "excel.exe", "soffice"]
+
+  whatsapp:
+    aliases: ["whatsapp"]
+    windows: { cmd: ["cmd", "/c", "start", "whatsapp"] }
+    darwin:  { cmd: ["open", "-a", "WhatsApp"] }
+    linux:   { cmd: ["whatsapp-for-linux"] }
+    process_names: ["whatsapp"]
+
+  notepad:
+    aliases: ["notepad", "text editor"]
+    windows: { cmd: ["notepad.exe"] }
+    darwin:  { cmd: ["open", "-a", "TextEdit"] }
+    linux:   { cmd: ["gedit"] }
+    process_names: ["notepad.exe", "textedit", "gedit"]
